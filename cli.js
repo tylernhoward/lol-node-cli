@@ -65,29 +65,29 @@ const randomRequest = "random.json"
 function runner(flags) {
     switch (true) {
         case flags.best:
-            tellJoke(rJokes, 25)
+            request(rJokes, 25)
             break;
         case flags.joke:
-            tellJoke(rJokes)
+            request(rJokes)
             break;
         case flags.dad:
-            tellJoke(rDadJokes)
+            request(rDadJokes)
             break;
         case flags.clean:
-            tellJoke(rCleanJokes)
+            request(rCleanJokes)
             break;
         case flags.anti:
-            tellJoke(rAntiJokes)
+            request(rAntiJokes)
             break;
         case flags.programmer:
-            tellJoke(rProgrammerHumor)
+            request(rProgrammerHumor)
             break;
         default:
-            tellJoke(rJokes)
+            request(rJokes)
     }
 }
 
-function tellJoke(subreddit, requestLimit) {
+function request(subreddit, requestLimit) {
     if (requestLimit) randomNum = Math.floor(Math.random() * requestLimit + 1);
 
     const requestUrl = requestLimit ? `${redditUrl}${subreddit}/${topRequest}${requestLimit}`:
@@ -99,19 +99,22 @@ function tellJoke(subreddit, requestLimit) {
             const post = requestLimit ? response.data[randomNum].data.children[randomNum].data : response.data[0].data.children[0].data
             const frame = post.title
             const punchline = post.selftext.trim()
-            if (punchline !== "") {
-                console.log(chalk.bold.yellowBright(
-                    `\n${frame}`))
-                setTimeout(() => {
-                    console.log("\n" + chalk.whiteBright(punchline) + "\n")
-                }, 1000);
-            } else {
-                tellJoke(subreddit)
-            }
+            tellJoke(frame, punchline)
         })
         .catch(function (error) {
             console.log("Connection Error: We cannot find any jokes :(\n");
         })
+}
+
+function tellJoke(frame, punchline){
+    if (punchline !== "") {
+        console.log(chalk.bold.yellowBright(`\n${frame}`))
+        setTimeout(() => {
+            console.log(`\n${chalk.whiteBright(punchline)}\n`)
+        }, 1000);
+    } else {
+        request(subreddit)
+    }
 }
 
 runner(cli.flags);

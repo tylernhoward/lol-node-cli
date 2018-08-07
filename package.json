@@ -1,21 +1,31 @@
 {
-  "name": "lol",
+  "name": "lol-node-cli",
   "version": "1.0.0",
-  "description": "",
+  "description": "Tiny commandline tool that retrieves a random joke from Reddit",
   "main": "cli.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "ISC",
-  "bin": {
-    "lol": "./cli.js"
-  },
   "dependencies": {
     "axios": "^0.18.0",
     "chalk": "^2.4.1",
-    "chalk-animation": "^1.6.0",
-    "meow": "^5.0.0",
-    "snoowrap": "^1.15.2"
-  }
+    "meow": "^5.0.0"
+  },
+  "bin": {
+    "lol": "./cli.js"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tylernhoward/lol-node-cli.git"
+  },
+  "keywords": [
+    "lol",
+    "node",
+    "reddit",
+    "joke"
+  ],
+  "author": "tylernhoward",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tylernhoward/lol-node-cli/issues"
+  },
+  "homepage": "https://github.com/tylernhoward/lol-node-cli#readme"
 }
