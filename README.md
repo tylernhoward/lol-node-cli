@@ -1,7 +1,8 @@
 # lol-node-cli
 
-  Tiny commandline tool that retrieves a random joke from Reddit
+### Install with `npm i lol-node-cli -g`
 
+  Tiny commandline tool that retrieves a random joke from Reddit
 
       ----------------
       ┏━┓┈┈╭━━━━╮┏━┓┈┈
@@ -29,4 +30,3 @@
 
         The last one was too possessive.
         
-        ### Install with `npm i lol-node-cli -g`
