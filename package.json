@@ -1,0 +1,21 @@
+{
+  "name": "lol",
+  "version": "1.0.0",
+  "description": "",
+  "main": "cli.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "bin": {
+    "lol": "./cli.js"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "chalk": "^2.4.1",
+    "chalk-animation": "^1.6.0",
+    "meow": "^5.0.0",
+    "snoowrap": "^1.15.2"
+  }
+}
