@@ -6,31 +6,32 @@ const chalk = require('chalk');
 const axios = require('axios');
 
 const cli = meow(`
-${chalk.yellowBright(`----------------
-┏━┓┈┈╭━━━━╮┏━┓┈┈
-┃╱┃┈┈┃╱╭╮╱┃┃╱┃┈┈
-┃╱┗━┓┃╱┃┃╱┃┃╱┗━┓
-┃╱╱╱┃┃╱╰╯╱┃┃╱╱╱┃
-┗━━━┛╰━━━━╯┗━━━┛
-----------------`)}
+${chalk.yellowBright(`  
+    ----------------
+    ┏━┓┈┈╭━━━━╮┏━┓┈┈
+    ┃╱┃┈┈┃╱╭╮╱┃┃╱┃┈┈
+    ┃╱┗━┓┃╱┃┃╱┃┃╱┗━┓
+    ┃╱╱╱┃┃╱╰╯╱┃┃╱╱╱┃
+    ┗━━━┛╰━━━━╯┗━━━┛
+    ----------------`)}
 ${chalk.whiteBright(`
     Usage
-	  $ lol
+      $ lol
 
     Options
       --best, -b  Tell one of the most popular jokes!
-	  --joke, -j  Tell a random joke from /r/jokes
+      --joke, -j  Tell a random joke from /r/jokes
       --dad, -d  Tell a random dad joke from /r/dadjokes
       --anti, -a  Tell a random anti-joke from /r/antijokes
       --clean, -c  Tell a random clean joke from /r/cleanjokes
-	  --programmer, -p  Tell a random joke from /r/programmerhumor (EXPERIMENTAL)
+      --programmer, -p  Tell a random joke from /r/programmerhumor (EXPERIMENTAL)
 
     Examples
       $ lol --dad
-
-      I'll never date another apostrophe.
-      The last one was too possessive.`)}
-`, {
+    `)}
+      ${chalk.yellowBright("I'll never date another apostrophe.\n")}
+      ${chalk.whiteBright("The last one was too possessive.")}
+    `, {
     flags: {
         joke: {
             type: 'boolean',
@@ -59,6 +60,8 @@ const redditUrl = "https://www.reddit.com"
 const rJokes = "/r/jokes"
 const rDadJokes = "/r/dadjokes"
 const rProgrammerHumor = "/r/programmerhumor"
+const rCleanJokes = "/r/cleanjokes"
+const rAntiJokes = "/r/antijokes"
 const topRequest = `top.json?limit=`
 const randomRequest = "random.json"
 
@@ -90,31 +93,28 @@ function runner(flags) {
 function request(subreddit, requestLimit) {
     if (requestLimit) randomNum = Math.floor(Math.random() * requestLimit + 1);
 
-    const requestUrl = requestLimit ? `${redditUrl}${subreddit}/${topRequest}${requestLimit}`:
-    `${redditUrl}${subreddit}/${randomRequest}`;
-                                      
+    const requestUrl = requestLimit ? `${redditUrl}${subreddit}/${topRequest}${requestLimit}` :
+        `${redditUrl}${subreddit}/${randomRequest}`;
+
 
     axios.get(requestUrl)
         .then(function (response) {
             const post = requestLimit ? response.data[randomNum].data.children[randomNum].data : response.data[0].data.children[0].data
             const frame = post.title
             const punchline = post.selftext.trim()
-            tellJoke(frame, punchline)
+            if (punchline !== "") tellJoke(frame, punchline)
+            else request(subreddit, requestLimit)
         })
         .catch(function (error) {
             console.log("Connection Error: We cannot find any jokes :(\n");
         })
 }
 
-function tellJoke(frame, punchline){
-    if (punchline !== "") {
-        console.log(chalk.bold.yellowBright(`\n${frame}`))
-        setTimeout(() => {
-            console.log(`\n${chalk.whiteBright(punchline)}\n`)
-        }, 1000);
-    } else {
-        request(subreddit)
-    }
+function tellJoke(frame, punchline) {
+    console.log(chalk.bold.yellowBright(`\n${frame}`))
+    setTimeout(() => {
+        console.log(`\n${chalk.whiteBright(punchline)}\n`)
+    }, 1000);
 }
 
 runner(cli.flags);
