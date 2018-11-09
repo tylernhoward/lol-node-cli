@@ -33,6 +33,10 @@ ${chalk.whiteBright(`
       ${chalk.whiteBright("The last one was too possessive.")}
     `, {
     flags: {
+        best: {
+            type: 'boolean',
+            alias: 'b'
+        },
         joke: {
             type: 'boolean',
             alias: 'j'
